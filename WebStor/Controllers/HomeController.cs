@@ -10,12 +10,14 @@ namespace WebStor.Controllers
     {
         public IActionResult Index()
         {
-            return Content("Hello from first controller");
+            //return Content("Hello from first controller");
+            return View();
+
         }
 
         public IActionResult SecondAction(string id) 
         {
-            return Content($"Second action with parameter {id}")
+            return Content($"Second action with parameter {id}");
         }
     }
 }
