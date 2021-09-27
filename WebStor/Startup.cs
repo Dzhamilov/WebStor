@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStor.Infrrastucture.Middleware;
 
 namespace WebStor
 {
@@ -38,9 +39,8 @@ namespace WebStor
 
             app.UseRouting();
 
-            //var greetings = "Hello from my first ASP.NET Core APp";
-            //var logging = Configuration["Logging:LogLevel:Default"];
-            //var greetings = Configuration["Greetings"];
+            app.UseMiddleware<TestMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/greetings", async context =>
