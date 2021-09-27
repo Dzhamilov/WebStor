@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebStor.Data;
 using WebStor.Models;
 
 namespace WebStor.Controllers
 {
     public class EmployeesController : Controller
     {
-        private static readonly List<Employee> _Employees = new()
-        {
-            new Employee { Id = 1, LastName = "Иванов", FirstName = "Иван", Patronymic = "Иванович", Age = 27 },
-            new Employee { Id = 2, LastName = "Петров", FirstName = "Пётр", Patronymic = "Петрович", Age = 31 },
-            new Employee { Id = 3, LastName = "Сидоров", FirstName = "Сидор", Patronymic = "Сидорович", Age = 18 },
-        };
+        private readonly IEnumerable<Employee> _Employees;
 
-        public IActionResult Index() => View(_Employees);
+        public EmployeesController()
+        {
+            _Employees = TestData.Employees;
+        }
+
+        public IActionResult Index() => View(TestData.Employees);
         
     }
 }
