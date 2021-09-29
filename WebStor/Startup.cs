@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStor.Infrrastucture.Conventions;
 using WebStor.Infrrastucture.Middleware;
 
 namespace WebStor
@@ -20,7 +21,7 @@ namespace WebStor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
+            services.AddControllersWithViews(opt => opt.Conventions.Add(new TestControllerConvention()))
                .AddRazorRuntimeCompilation();
         }
 
@@ -40,6 +41,8 @@ namespace WebStor
             app.UseRouting();
 
             app.UseMiddleware<TestMiddleware>();
+
+            app.UseWelcomePage("/welcome");
 
             app.UseEndpoints(endpoints =>
             {
