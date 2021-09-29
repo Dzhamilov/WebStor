@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStor", "WebStor\WebStor.csproj", "{D26C83CD-0B75-46F0-9E31-555A140B45D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStor", "WebStor\WebStor.csproj", "{D26C83CD-0B75-46F0-9E31-555A140B45D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
