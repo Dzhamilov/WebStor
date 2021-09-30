@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebStor.Infrrastucture.Conventions;
 using WebStor.Infrrastucture.Middleware;
+using WebStor.Services;
+using WebStor.Services.Interfaces;
 
 namespace WebStor
 {
@@ -21,6 +23,11 @@ namespace WebStor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
+            //services.AddScoped<IEmployeesData, InMemoryEmployeesData>();
+            //services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
+
+
             services.AddControllersWithViews(opt => opt.Conventions.Add(new TestControllerConvention()))
                .AddRazorRuntimeCompilation();
         }
