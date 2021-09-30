@@ -43,6 +43,9 @@ namespace WebStor
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseStatusCodePages();
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -50,6 +53,8 @@ namespace WebStor
             app.UseMiddleware<TestMiddleware>();
 
             app.UseWelcomePage("/welcome");
+
+            //app.UseStatusCodePagesWithReExecute("/Home/Status/{0}");
 
             app.UseEndpoints(endpoints =>
             {
