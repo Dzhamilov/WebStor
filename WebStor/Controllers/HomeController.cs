@@ -9,12 +9,11 @@ namespace WebStor.Controllers
 {
     public class HomeController : Controller
     {
-        
-        public IActionResult Index()
-        {
-            return View();
+        public IActionResult Index() => View();
 
-        }
+        public IActionResult ContactUs() => View();
+
+        public IActionResult Status(string Code) => Content($"Status code - {Code}");
 
 
     }
