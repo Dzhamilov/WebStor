@@ -24,8 +24,4 @@
     <ProjectReference Include="..\WebStore.DAL\WebStore.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\InSQL\" />
-  </ItemGroup>
-
 </Project>
