@@ -41,12 +41,12 @@ namespace WebStor
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //}
 
-            app.UseStatusCodePages();
+            app.UseStatusCodePagesWithRedirects("~/home/status/{0}");
 
             app.UseStaticFiles();
 
@@ -55,8 +55,6 @@ namespace WebStor
             app.UseMiddleware<TestMiddleware>();
 
             app.UseWelcomePage("/welcome");
-
-            //app.UseStatusCodePagesWithReExecute("/Home/Status/{0}");
 
             app.UseEndpoints(endpoints =>
             {
