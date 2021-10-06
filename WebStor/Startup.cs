@@ -9,6 +9,8 @@ using WebStor.Data;
 using WebStor.Infrrastucture.Conventions;
 using WebStor.Infrrastucture.Middleware;
 using WebStor.Services;
+using WebStor.Services.InMemory;
+using WebStor.Services.InSQL;
 using WebStor.Services.Interfaces;
 using WebStore.DAL.Context;
 
@@ -32,7 +34,9 @@ namespace WebStor
             services.AddTransient<WebStoreDbInitializer>();
 
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
-            services.AddSingleton<IProductData, InMemoryProductData>();
+            //services.AddSingleton<IProductData, InMemoryProductData>();
+            services.AddScoped<IProductData, SqlProductData>();
+
             //services.AddScoped<IEmployeesData, InMemoryEmployeesData>();
             //services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
 
