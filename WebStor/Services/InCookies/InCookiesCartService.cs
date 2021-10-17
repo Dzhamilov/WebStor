@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStor.Domain.Entities;
+using WebStor.Infrrastucture.Mapping;
 using WebStor.Services.Interfaces;
 using WebStor.ViewModels;
 
@@ -106,7 +107,19 @@ namespace WebStor.Services.InCookies
 
         public CartViewModel GetViewModel()
         {
-            return null;
+            var products = _ProductData.GetProducts(new()
+            {
+                Ids = Cart.Items.Select(item => item.ProductId).ToArray()
+            });
+
+            var products_views = products.ToView().ToDictionary(p => p.Id);
+
+            return new CartViewModel
+            {
+                Items = Cart.Items
+                   .Where(item => products_views.ContainsKey(item.ProductId))
+                   .Select(item => (products_views[item.ProductId], item.Quantity))
+            };
         }
     }
 }
