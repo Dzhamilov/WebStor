@@ -12,6 +12,7 @@ using WebStor.Domain.Entities.Base.Identity;
 using WebStor.Infrrastucture.Conventions;
 using WebStor.Infrrastucture.Middleware;
 using WebStor.Services;
+using WebStor.Services.InCookies;
 using WebStor.Services.InMemory;
 using WebStor.Services.InSQL;
 using WebStor.Services.Interfaces;
@@ -76,6 +77,7 @@ namespace WebStor
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
             //services.AddSingleton<IProductData, InMemoryProductData>();
             services.AddScoped<IProductData, SqlProductData>();
+            services.AddScoped<ICartService, InCookiesCartService>();
 
             //services.AddScoped<IEmployeesData, InMemoryEmployeesData>();
             //services.AddTransient<IEmployeesData, InMemoryEmployeesData>();
