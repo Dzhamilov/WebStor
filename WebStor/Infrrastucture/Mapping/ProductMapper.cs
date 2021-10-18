@@ -22,5 +22,5 @@ namespace WebStor.Infrrastucture.Mapping
             };
 
         public static IEnumerable<ProductViewModel> ToView(this IEnumerable<Product> products) => products.Select(ToView);
-    }ч
+    }
 }
