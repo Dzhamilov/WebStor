@@ -13,7 +13,12 @@ namespace WebStor.Services.InMemory
     {
         IEnumerable<Section> IProductData.GetSections() => TestData.Sections;
 
+        public Section GetSectionById(int Id) => TestData.Sections.FirstOrDefault(s => s.Id == Id);
+
         IEnumerable<Brand> IProductData.GetBrands() => TestData.Brands;
+
+        public Brand GetBrandById(int Id) => TestData.Brands.FirstOrDefault(b => b.Id == Id);
+
 
         public IEnumerable<Product> GetProducts(ProductFilter Filter = null)
         {
@@ -30,5 +35,8 @@ namespace WebStor.Services.InMemory
 
             return query;
         }
+
+        public Product GetProductById(int Id) => TestData.Products.FirstOrDefault(p => p.Id == Id);
+
     }
 }

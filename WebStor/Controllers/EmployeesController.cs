@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStor.Data;
+using WebStor.Domain.Entities.Base.Identity;
 using WebStor.Models;
 using WebStor.Services.Interfaces;
 using WebStor.ViewModels;
@@ -14,6 +16,7 @@ namespace WebStor.Controllers
     //[Route("Employees/[action]/{id?}")]
     //[Route("Staff/[action]/{id?}")] 
 
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly IEmployeesData _EmployeesData;
@@ -40,10 +43,12 @@ namespace WebStor.Controllers
             return View(employee);
         }
 
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult Create() => View("Edit", new EmployeeViewModel());
 
         #region Edit
 
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult Edit(int? id)
         {
             if (id is null)
@@ -66,6 +71,7 @@ namespace WebStor.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult Edit(EmployeeViewModel model)
         {
             
@@ -95,6 +101,7 @@ namespace WebStor.Controllers
 
         #region Delete
 
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult Delete(int id)
         {
             if (id < 0) return BadRequest();
@@ -114,6 +121,7 @@ namespace WebStor.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult DeleteConfirmed(int id)
         {
             _EmployeesData.Delete(id);
