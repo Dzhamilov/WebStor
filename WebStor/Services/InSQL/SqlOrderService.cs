@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +17,72 @@ namespace WebStor.Services.InSQL
         private WebStoreDB _db;
         private UserManager<User> _UserManager;
 
-        public SqlOrderService(WebStoreDB db, UserManager<User> UserManager)
+        public async Task<IEnumerable<Order>> GetUserOrders(string UserName)
         {
-            _db = db;
-            _UserManager = UserManager;
+            var orders = await _db.Orders
+               .Include(o => o.User)
+               .Include(o => o.Items)
+               .ThenInclude(o => o.Product)
+               .Where(o => o.User.UserName == UserName)
+               .ToArrayAsync()
+               .ConfigureAwait(false);
+            return orders;
         }
 
-        public Task<Order> CreateOrder(string UserName, CartViewModel Cart, OrderViewModel OrderModel)
+        public async Task<Order> GetOrderById(int id)
         {
-            throw new NotImplementedException();
+            var order = await _db.Orders
+               .Include(o => o.User)
+               .Include(o => o.Items)
+               .ThenInclude(o => o.Product)
+               .FirstOrDefaultAsync(o => o.Id == id)
+               .ConfigureAwait(false);
+            return order;
         }
 
-        public Task<Order> GetOrderById(int id)
+        public async Task<Order> CreateOrder(string UserName, CartViewModel Cart, OrderViewModel OrderModel)
         {
-            throw new NotImplementedException();
-        }
+            var user = await _UserManager.FindByNameAsync(UserName).ConfigureAwait(false);
 
-        public Task<IEnumerable<Order>> GetUserOrders(string UserName)
-        {
-            throw new NotImplementedException();
+            if (user is null)
+                throw new InvalidOperationException($"Пользователь {UserName} не найден");
+
+            await using var transaction = await _db.Database.BeginTransactionAsync();
+
+            var order = new Order
+            {
+                User = user,
+                Address = OrderModel.Address,
+                Phone = OrderModel.Phone,
+                Description = OrderModel.Description,
+            };
+
+            var product_ids = Cart.Items.Select(item => item.Product.Id).ToArray();
+
+            var cart_products = await _db.Products
+               .Where(p => product_ids.Contains(p.Id))
+               .ToArrayAsync();
+
+            order.Items = Cart.Items.Join(
+                cart_products,
+                cart_item => cart_item.Product.Id,
+                cart_product => cart_product.Id,
+                (cart_item, cart_product) => new OrderItem
+                {
+                    Order = order,
+                    Product = cart_product,
+                    Price = cart_product.Price, // можно добавить скидку тут!
+                    Quantity = cart_item.Quantity,
+                }).ToArray();
+
+            await _db.Orders.AddAsync(order);
+            //await _db.Set<OrderItem>().AddRangeAsync(order.Items); // нет необходимости!
+
+            await _db.SaveChangesAsync();
+
+            await transaction.CommitAsync();
+
+            return order;
         }
     }
 }
