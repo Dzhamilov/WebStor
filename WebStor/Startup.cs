@@ -121,6 +121,11 @@ namespace WebStor
                     await context.Response.WriteAsync(Configuration["Greetings"]);
                 });
 
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 // endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllerRoute(
                     "default",

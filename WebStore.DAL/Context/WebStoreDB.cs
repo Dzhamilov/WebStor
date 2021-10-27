@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebStor.Domain.Entities;
 using WebStor.Domain.Entities.Base.Identity;
+using WebStor.Domain.Entities.Orders;
 
 namespace WebStore.DAL.Context
 {
@@ -17,6 +18,10 @@ namespace WebStore.DAL.Context
         public DbSet<Section> Sections { get; set; }
 
         public DbSet<Brand> Brands { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        //public DbSet<OrderItem> OrderItems { get; set; } // не обязательно
 
         public WebStoreDB(DbContextOptions<WebStoreDB> options) : base(options) { }
 
