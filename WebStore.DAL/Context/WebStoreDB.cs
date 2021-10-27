@@ -18,6 +18,10 @@ namespace WebStore.DAL.Context
 
         public DbSet<Brand> Brands { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        //public DbSet<OrderItem> OrderItems { get; set; } // не обязательно
+
         public WebStoreDB(DbContextOptions<WebStoreDB> options) : base(options) { }
 
         //protected override void OnModelCreating(ModelBuilder model)
