@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebStor.Domain.Entities;
 using WebStor.Domain.Entities.Base.Identity;
+using WebStor.Domain.Entities.Orders;
 
 namespace WebStore.DAL.Context
 {
